@@ -37,6 +37,18 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	int n;
+	cin>>n;
+
+	int arr[n];
+	rep(i, n) cin>>arr[i];
+
+	sort(arr, arr+n);
+
+	ll sum = 0;
+	for(int i=0;i<n/2;i++)
+		sum += arr[n-1-i] - arr[i];
+
+	cout << sum;
 }
 

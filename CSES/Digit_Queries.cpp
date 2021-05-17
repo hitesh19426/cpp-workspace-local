@@ -37,6 +37,15 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	int q;
+	cin>>q;
+
+	while (q--)
+	{
+		ll n;
+		cin>>n;
+
+		
+	}
 }
 

@@ -6,6 +6,16 @@ using namespace std;
 #define ull unsigned long long
 #define endl '\n'
 
+
+
+#define nline '\n'
+#define inf 1000000000
+#define mod 1000000007
+#define inf_ll (ll)1e18
+#define PI 3.141592653589793238462
+
+
+
 #define ff first
 #define ss second
 #define pb push_back
@@ -37,6 +47,29 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	int n;
+	cin>>n;
+
+	int arr[n];
+	rep(i, n) cin>>arr[i];
+
+	int len = (1<<n);
+	ll sum = 0;
+	rep(i, n) sum += arr[i];
+
+	ll min_diff = inf_ll;
+
+	for (int i=0;i<len;i++)
+	{
+		ll set1 = 0;
+		for (int j=0;j<n;j++)
+		{
+			if ( i & (1<<j))
+				set1 += arr[j];
+		}
+		min_diff = min(min_diff, abs(sum-set1-set1));
+	}
+
+	cout<<min_diff;
 }
 

@@ -36,7 +36,32 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void solve(){
-	
+
+ll expo(int x, int n)
+{
+	if (n==0)
+		return 1;
+	if (n==1)
+		return x;
+
+	ll val = expo(x, n/2);
+	if (n&1)
+		return val*val*x;
+	return val*val;
+}
+
+void solve()
+{
+	int n;
+	cin>>n;
+
+	int sum = 0;
+	ll pow = 5;
+	while (pow<=n){
+		sum += n/(pow);
+		pow *= 5;
+	}
+
+	cout<<sum;
 }
 

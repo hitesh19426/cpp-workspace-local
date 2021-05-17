@@ -6,6 +6,8 @@ using namespace std;
 #define ull unsigned long long
 #define endl '\n'
 
+#define mod 1000000007
+
 #define ff first
 #define ss second
 #define pb push_back
@@ -36,7 +38,23 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void solve(){
-	
+ll expo_mod(int x, int n)
+{
+	if (n==0)
+		return 1;
+	if (n==1)
+		return x%mod;
+
+	ll val = expo_mod(x, n/2);
+	if (n&1)
+		return (((val%mod) * (val%mod))%mod * (x%mod))%mod;
+	return ((val%mod)*(val%mod))%mod;
 }
 
+void solve(){
+	int n;
+	cin>>n;
+
+	cout<<expo_mod(2, n);
+
+}

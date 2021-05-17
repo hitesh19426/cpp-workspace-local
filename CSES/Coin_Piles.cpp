@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
 #endif
 
 	int t=1;
-	// cin>>t;
+	cin>>t;
 	while(t--){
 		solve();
 		cout<<endl;
@@ -36,7 +36,19 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
+bool ans(ll a, ll b)
+{
+	if ((2*a-b)%3==0 && (2*a-b)>=0 && (2*b-a)%3==0 && (2*b-a)>=0 )
+		return true;
+
+	return false;
+	// return ans(a-1, b-2) || ans(a-2, b-1);
+}
+
 void solve(){
-	
+	int a, b;
+	cin>>a>>b;
+
+	cout<< (ans(a, b) ? "YES" : "NO");
 }
 

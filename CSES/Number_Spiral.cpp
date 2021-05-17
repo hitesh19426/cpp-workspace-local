@@ -37,6 +37,10 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	int y, x;
+	cin>>y>>x;
+
+	swap(x, y);
+
 }
 

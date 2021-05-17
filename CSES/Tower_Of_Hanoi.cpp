@@ -31,12 +31,28 @@ int main(int argc, char const *argv[])
 	// cin>>t;
 	while(t--){
 		solve();
-		cout<<endl;
+		// cout<<endl;
 	}
 	return 0;
 }
 
+void hanoi(int n, int src, int dest, int temp)
+{
+	if (n==1){
+		cout<<src<<" "<<dest<<endl;
+		return;
+	}
+
+	hanoi(n-1, src, temp, dest);
+	cout<<src<<" "<<dest<<endl;
+	hanoi(n-1, temp, dest, src);
+}
+
 void solve(){
-	
+	int n;
+	cin>>n;
+
+	cout<< (1<<n) - 1 <<endl;
+	hanoi(n, 1, 3, 2);
 }
 

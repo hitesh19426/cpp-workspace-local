@@ -31,12 +31,27 @@ int main(int argc, char const *argv[])
 	// cin>>t;
 	while(t--){
 		solve();
-		cout<<endl;
+		// cout<<endl;
 	}
 	return 0;
 }
 
 void solve(){
-	
+	string s;
+	cin>>s;
+
+	sort(s.begin(), s.end());
+
+	set<string> uset;
+
+	do{
+		uset.insert(s);
+	}
+	while(next_permutation(s.begin(), s.end()));
+
+	cout<<uset.size()<<endl;
+	for(string str:uset)
+		cout<<str<<endl;
+
 }
 
