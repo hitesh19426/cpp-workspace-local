@@ -6,24 +6,28 @@ using namespace std;
 #define ull unsigned long long
 #define endl '\n'
 
-#define vi vector<int>
-#define pii pair<int, int>
-#define pll pair<long long, long long>
-#define vpii vector<pair<int, int>>
-#define vll vector<long long>
-#define vvi vector<vector<int>>
 
-#define pb push_back
-#define eb emplace_back
-#define mp make_pair
+#define nline '\n'
+#define inf 1000000000
+#define mod 1000000007
+#define inf_ll (ll)1e18
+#define PI 3.141592653589793238462
+
+
+
 #define ff first
 #define ss second
-
+#define pb push_back
+#define mp make_pair
+#define eb emplace_back
 #define rep(i, n)	for (int i=0;i<n;i++)
 #define reps(i, a, n)	for (int i=a;i<n;i++)
 #define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 void solve();
+
+
+
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
@@ -50,37 +54,47 @@ template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
-/*-------------------------------------------------------------*/
 
-int main()
+
+/*----------------------------------------------------------------------------------------------------*/
+
+int main(int argc, char const *argv[])
 {
+	/* code */
+	fastio();
+#ifndef ONLINE_JUDGE
+	freopen("errorf.in", "w", stderr);
+#endif
+
+	int x = 0;
+	print(x%mod);
 	int t=1;
 	cin>>t;
-	while(t--)
-	{
+	while(t--){
 		solve();
 		cout<<endl;
 	}
 	return 0;
 }
 
-void solve()
+ll expo(ll x, ll n)
 {
-	int n;
-	cin>>n;
+	if (n==0)
+		return 1;
+	if (n==1)
+		return x%mod;
 
-	int arr[n];
-	rep(i, n) cin>>arr[i];
-
-	map<int, int> umap;
-	for(int i=0;i<n;i++)
-	{
-		
-			umap[arr[i]]++;
-		// else
-		// 	umap[arr[i]]=1;
-	}
-
-	print(umap);
-	// cout<<Solution().sortSentence(haystack);
+	ll val = expo(x, n/2);
+	if (n&1)
+		return ( (val%mod)*(val%mod)*(x%mod) )%mod;
+	return ((val%mod)*(val%mod))%mod;
 }
+
+
+void solve(){
+	int a, b, c;
+	cin>>a>>b>>c;
+
+	cout<<expo(expo(a, b), c);
+}
+
