@@ -1,37 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
-void solve();
 
 #define ll long long
 #define ld long double
 #define ull unsigned long long
+#define endl '\n'
+
+
+
 #define vi vector<int>
-#define vb vector<bool>
 #define pii pair<int, int>
+#define pll pair<long long, long long>
+#define vpii vector<pair<int, int>>
 #define vll vector<long long>
 #define vvi vector<vector<int>>
-#define vpii vector<pair<int, int>>
-#define pll pair<long long, long long>
 
-#define endl '\n'
-#define nline '\n'
-#define inf 1000000000
-#define mod 1000000007
-#define mod1 998244353
-#define inf_ll (ll)1e18
-#define PI 3.141592653589793238462
+
+
+
 #define ff first
 #define ss second
 #define pb push_back
 #define mp make_pair
 #define eb emplace_back
-#define set_bits __builtin_popcountll
-#define all(x) (x).begin(), (x).end()
-
 #define rep(i, n)	for (int i=0;i<n;i++)
 #define reps(i, a, n)	for (int i=a;i<n;i++)
 #define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
-#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+void solve();
+
+
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
@@ -53,6 +51,8 @@ template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
+
+
 /*----------------------------------------------------------------------------------------------------*/
 
 int main(int argc, char const *argv[])
@@ -64,7 +64,7 @@ int main(int argc, char const *argv[])
 #endif
 
 	int t=1;
-	cin>>t;
+	// cin>>t;
 	while(t--){
 		solve();
 		cout<<endl;
@@ -72,19 +72,37 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void solve(){
-	int n;
-	cin>>n;
+int ways(vvi &dp, vi &prices, vi &pages, int n, int x)
+{
+	if(dp[n][x]!=-1)
+		return dp[n][x];
 
-	string s;
-	cin>>s;
-	
-	int nozero=0;
-	for(int i=0;i<n;i++)
-		if(s[i]=='0')
-			nozero++;
+	if(x-prices[n-1]>=0){
+		dp[n][x] = max(ways(dp, prices, pages, n-1, x), pages[n-1] + ways(dp, prices, pages, n-1, x-prices[n-1]) );
+	}
+	else{
+		dp[n][x] = ways(dp, prices, pages, n-1, x);
+	}
 
-	if(nozero)
-		
-
+	return dp[n][x];
 }
+
+void solve(){
+	int n, x;
+	cin>>n>>x;
+
+	vi prices(n);
+	rep(i, n) cin>>prices[i];
+
+	vi pages(n);
+	rep(i, n) cin>>pages[i];
+
+	vvi dp(n+1, vi(x+1, -1));
+	for(int i=0;i<=n;i++)
+		dp[i][0] = 0;
+	for(int i=0;i<=x;i++)
+		dp[0][i] = 0;
+	
+	cout << ways(dp, prices, pages, n, x);
+}
+

@@ -112,8 +112,9 @@ public:
 
 	ll dfs_for_connected_sum(int i, vb vis)
 	{
-		if (!vis[i]) return 0;
+		if (vis[i]) return 0;
 
+		vis[i] = true;
 		ll sum = 1;
 		for (auto itr=graph[i].begin();itr!=graph[i].end();itr++)
 		{

@@ -1,37 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
-void solve();
 
 #define ll long long
 #define ld long double
 #define ull unsigned long long
+#define endl '\n'
+#define mod 1000000007
+
+
+
 #define vi vector<int>
-#define vb vector<bool>
 #define pii pair<int, int>
+#define pll pair<long long, long long>
+#define vpii vector<pair<int, int>>
 #define vll vector<long long>
 #define vvi vector<vector<int>>
-#define vpii vector<pair<int, int>>
-#define pll pair<long long, long long>
 
-#define endl '\n'
-#define nline '\n'
-#define inf 1000000000
-#define mod 1000000007
-#define mod1 998244353
-#define inf_ll (ll)1e18
-#define PI 3.141592653589793238462
+
+
+
 #define ff first
 #define ss second
 #define pb push_back
 #define mp make_pair
 #define eb emplace_back
-#define set_bits __builtin_popcountll
-#define all(x) (x).begin(), (x).end()
-
 #define rep(i, n)	for (int i=0;i<n;i++)
 #define reps(i, a, n)	for (int i=a;i<n;i++)
 #define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
-#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+void solve();
+
+
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
@@ -53,6 +52,8 @@ template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
+
+
 /*----------------------------------------------------------------------------------------------------*/
 
 int main(int argc, char const *argv[])
@@ -64,7 +65,7 @@ int main(int argc, char const *argv[])
 #endif
 
 	int t=1;
-	cin>>t;
+	// cin>>t;
 	while(t--){
 		solve();
 		cout<<endl;
@@ -72,19 +73,32 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
+ll ways(int n, vll &dp)
+{
+	if(n<0)
+		return 0;
+	if(n==0)
+		return 1;
+	if(dp[n]!=-1)
+		return dp[n];
+
+	ll count = 0;
+	for(int i=1;i<=6;i++)
+	{
+		count = (count%mod + ways(n-i, dp)%mod)%mod;
+	}
+
+	dp[n] = count;
+	return dp[n];
+}
+
+
 void solve(){
 	int n;
 	cin>>n;
 
-	string s;
-	cin>>s;
-	
-	int nozero=0;
-	for(int i=0;i<n;i++)
-		if(s[i]=='0')
-			nozero++;
+	vll dp(n+1, -1);
 
-	if(nozero)
-		
-
+	cout<<ways(n, dp);
 }
+

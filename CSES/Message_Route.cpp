@@ -54,6 +54,14 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 void solve();
 
+// vector<int> graph[200005];
+#define N 200005
+vector<vector<int>> graph(N+5, vector<int>(0));
+vector<bool> vis(N+5, false);
+vector<int> parent(N+5, -1); 
+vector<int> dist(N+5, inf);
+queue<int> q;
+
 /*----------------------------------------------------------------------------------------------------*/
 
 int main(int argc, char const *argv[])
@@ -68,12 +76,71 @@ int main(int argc, char const *argv[])
 	// cin>>t;
 	while(t--){
 		solve();
+		// printf("\n");
 		cout<<endl;
 	}
 	return 0;
 }
 
-void solve(){
+void print_path(vector<int> &parent, int src, int dest)
+{
 	
+	if(src==-1){
+		return;
+	}
+ 
+	print_path(parent, parent[src], dest);
+	cout<<src<<" ";
+}
+
+void solve(){
+	int n, m;
+	cin>>n>>m;
+
+	// vector<vector<int>> graph(n+5, vector<int>());
+	for(int i=0;i<m;i++){
+		int a, b;
+		cin>>a>>b;
+		graph[a].emplace_back(b);
+		graph[b].emplace_back(a);
+	}
+
+	
+	// vector<bool> vis(n+5, false);
+	// vector<int> parent(n+5, -1), dist(n+5, inf);
+	int src = 1;
+	int dest = n;
+
+	q.push(src);
+	vis[src] = true;
+	dist[src] = 0;
+	parent[src] = -1;
+
+	while(!q.empty()){
+		auto u = q.front();
+		q.pop();
+
+		for(auto v: graph[u]){
+			if(!vis[v]){
+				parent[v] = u;
+				dist[v] = dist[u] + 1;
+				vis[v] = true;
+				q.push(v);
+			}
+		}
+	}
+
+	if(!vis[dest]){
+		cout<<"IMPOSSIBLE";
+		// printf("IMPOSSIBLE");
+		return;
+	}
+
+	cout<<dist[dest]+1<<endl;
+	// printf("%d\n", dist[dest]+1);
+
+	// print(parent);
+	print_path(parent, dest, src);
+
 }
 
