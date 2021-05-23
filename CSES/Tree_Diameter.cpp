@@ -6,7 +6,6 @@ void solve();
 #define ld long double
 #define ull unsigned long long
 #define endl '\n'
-
 #define nline '\n'
 #define inf 1000000000
 #define mod 1000000007
@@ -32,6 +31,7 @@ void solve();
 #define reps(i, a, n)	for (int i=a;i<n;i++)
 #define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
@@ -73,7 +73,92 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void solve(){
+class Graph
+{
+	int n;
+	vector<vector<int>> graph;
+public:
+	Graph(int _n)
+	{
+		n = _n;
+		graph = vector<vector<int>>(n, vector<int>());
+	}
+
+	void addEdge(int u, int v)
+	{
+		graph[u].emplace_back(v);
+	}
+
+	vector<int> bfs(int src)
+	{
+		vector<int> dist(n, INT_MAX);
+		vector<bool> vis(n, false);
+
+		vis[src] = true;
+		dist[src] = 0;
+		queue<int> q;
+		q.push(src);
+
+		while(!q.empty())
+		{
+			int u = q.front();
+			q.pop();
+
+			for(int v:graph[u]) {
+				if(!vis[v]) {
+					dist[v] = dist[u] + 1;
+					vis[v] = true;
+					q.push(v);
+				}
+			}
+		}
+
+		return dist;
+	}
+
+	int diameter()
+	{
+		vector<int> dist = bfs(1);
+
+		// for(int i=0;i<n;i++)
+		// 	cout<<dist[i]<<" ";
+		// cout<<endl;
+
+		int max_dist = -1;
+		int node = -1;
+		for(int i=0;i<n;i++){
+			if(dist[i]>max_dist && dist[i]!=INT_MAX){
+				max_dist = dist[i];
+				node = i;
+			}
+		}
+
+		dist = bfs(node);
+		max_dist = -1, node = -1;
+		for(int i=0;i<n;i++){
+			if(dist[i]>max_dist && dist[i]!=INT_MAX){
+				max_dist = dist[i];
+				node = i;
+			}
+		}
+
+		return max_dist;
+	}
 	
+};
+
+void solve(){
+	int n;
+	cin>>n;
+
+	Graph graph(n+1);
+	for(int i=0;i<n-1;i++){
+		int u, v;
+		cin>>u>>v;
+		graph.addEdge(u, v);
+		graph.addEdge(v, u);
+	}
+
+	cout<<graph.diameter();
 }
 

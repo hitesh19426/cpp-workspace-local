@@ -1,11 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
+void solve();
 
 #define ll long long
 #define ld long double
 #define ull unsigned long long
-#define endl '\n'
-
 #define endl '\n'
 #define nline '\n'
 #define inf 1000000000
@@ -22,6 +21,17 @@ using namespace std;
 #define vvb vector<vector<bool>>
 #define vpii vector<pair<int, int>>
 #define pll pair<long long, long long>
+
+#define ff first
+#define ss second
+#define pb push_back
+#define mp make_pair
+#define eb emplace_back
+#define rep(i, n)	for (int i=0;i<n;i++)
+#define reps(i, a, n)	for (int i=a;i<n;i++)
+#define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
@@ -43,16 +53,6 @@ template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
-#define ff first
-#define ss second
-#define pb push_back
-#define mp make_pair
-#define eb emplace_back
-#define rep(i, n)	for (int i=0;i<n;i++)
-#define reps(i, a, n)	for (int i=a;i<n;i++)
-#define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
-#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
-void solve();
 
 /*----------------------------------------------------------------------------------------------------*/
 
