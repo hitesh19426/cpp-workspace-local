@@ -72,6 +72,108 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
+class Tree
+{
+	int n;
+	vector<int> parent;			// bfs
+	vector<vector<int>> tree;
+	map<int, pair<int, int>> val;
+	map<int, ll> final_values;
+public:
+	Tree(int n, map<int, pair<int, int>> val)
+	{
+		this->n = n;
+		tree = vector<vector<int>>(n, vector<int>());
+		this->val = val;
+	}
+
+	void addEdge(int u, int v)
+	{
+		graph[u].emplace_back(v);
+		graph[v].emplace_back(u);
+	}
+
+	void bfs(int src=1)
+	{
+		parent = vector<int>(n, -1);
+		vector<bool> vis(n, false);
+
+		/* initialize queue and push src. update src values/parent*/
+		vis[src] = true;
+		queue<int> q;
+		q.push(src);
+
+		/* update result for every unvisited outgoing node from latest node(u). */
+		while(q.empty())
+		{
+			int u = q.front();
+			q.pop();
+
+			for(int v:tree[u])
+			{
+				if(!vis[v])
+				{
+					vis[v] = true;
+					parent[v] = u;
+					q.push(v);
+				}
+			}
+		}
+	}
+
+	bool isleaf(int x)
+	{
+		int s = graph[x].size();
+		return s==1;
+	}
+
+	void dfs(int src)
+	{
+		if(vis[src])
+			return ;
+
+		if(isleaf(src))
+		{
+			int l = val[src].ff;
+			int r = val[src].ss;
+			int pl = val[parent[src]].ff;
+			int pr = val[parent[src]].ss;
+			int ansl = min(abs(l-pl), abs(l-pr));
+			int ansr = min(abs(r-pl), abs(r-pr));
+
+			if(ansl<=ansr){
+				final_values[src] = l;
+			}
+			else{
+				final_values[src] = r;
+			}
+			return ;
+		}
+
+	}
+	
+};
+
 void solve(){
-	cout<<1<<endl;	
+	int n;
+	cin>>n;
+
+	map<int, pair<int, int>> ranges;
+	for(int i=1;i<=n;i++)
+	{
+		int l, r;
+		cin>>l>>r;
+		ranges[i]=make_pair(l, r);
+	}
+
+	Tree tree(n+1, ranges);
+	for(int i=1;i<n;i++)
+	{
+		int u, v;
+		cin>>u>>v;
+		tree.addEdge(u, v);
+	}
+
+
+
 }

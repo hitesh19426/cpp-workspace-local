@@ -73,5 +73,37 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	cout<<1<<endl;	
+	int n;
+	cin>>n;
+
+	vector<ll> arr(n);
+	rep(i, n) cin>>arr[i];
+
+	sort(arr.begin(), arr.end());
+	if(arr[0]>0){
+		cout<< 1;
+		return;
+	}
+	if(arr[n-1]<=0){
+		cout<<n;
+		return;
+	}
+	if(arr[0]==0){
+		cout<<upper_bound(arr.begin(), arr.end(), 0) - lower_bound(arr.begin(), arr.end(), 0);
+		return;
+	}
+	
+	int ind = lower_bound(arr.begin(), arr.end(), 1)-arr.begin();
+	long long min_diff=LONG_MAX;
+	// print(ind);
+	for(int i=0;i<ind;i++){
+		min_diff = min(min_diff, abs(arr[i]-arr[i+1]));
+	}
+
+	if(arr[ind]<=min_diff){
+		cout<<ind+1;
+	}
+	else{
+		cout<<ind;
+	}
 }

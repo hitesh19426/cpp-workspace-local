@@ -73,5 +73,21 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	cout<<1<<endl;	
+	int n;
+	cin>>n;
+
+	int arr[n];
+	rep(i, n) cin>>arr[i];
+
+	map<int, int> m;
+	for(int i:arr)
+		m[i]++;
+
+	if(m.size()==1){
+		cout<< 0;
+		return;
+	}
+
+	sort(arr, arr+n);
+	cout<< n - m[arr[0]];
 }

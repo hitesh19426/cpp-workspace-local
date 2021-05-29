@@ -85,10 +85,20 @@ Algo:
 	Note: In order to avoid more overflow, do ( ((val%mod)*(val%mod))%mod * (x%mod) )% mod
 	or take ll (would still have overflow with large mod and x)
 	
-General idea: (a+b)%mod = (a%mod + b%mod)%mod
-			(a-b)%mod	= (a%mod - b%mod)%mod   -- look not -ve val mod
-			(a*b)%mod	= (a%mod * b%mod)%mod	
-			(a/b)%mod	= (a%mod / b%mod)%mod	-- does not work
+General idea: (a+b)%p = (a%p + b%p) % p
+			(a*b)%p	= (a%p * b%p)%p	
+			(a-b)%p	= (a%p - b%p)%p   -- look not -ve val mod
+			Solution : (a-b)%pow = ((a-b) % p + p) % p 	-- this takes care of -ve remainders
+						or
+						int ans = (a%p - b%p)%p
+						if (ans<0)	ans += p;
+
+			(a/b)%p	= (a%p / b%p)%p	-- does not work
+			Solution : for prime numbers p
+			(a/b)%p = (a*inverse(b))%p = (a*power(b, p-2))%p  -- if p is prime
+
+			for non-prime:
+			inverse(b) = phi(b)-1, where phi is some function
 			
 Note IMP : -ve number mod
 	modulo(a, b):
