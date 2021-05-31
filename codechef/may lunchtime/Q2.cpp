@@ -67,17 +67,54 @@ int main(int argc, char const *argv[])
 	cin>>t;
 	while(t--){
 		solve();
-		cout<<endl;
+		// cout<<endl;
 	}
 	return 0;
 }
 
 void solve(){
-	int n;
-	cin>>n;
+	int n, k;
+	cin>>n>>k;
 
-	if(n&1)
-		cout<<n/2+1;
-	else
-		cout<<n/2;
+	string s;
+	cin>>s;
+
+	int dist=0;
+	for(int i=0;i<n-1;i++){
+		if(s[i]==s[i+1])
+			dist+=2;
+		else dist+=1;
+	}
+
+	print(dist);
+	while(k--){
+		int q;
+		cin>>q;
+		q--;
+		
+		if(q-1>=0){
+			if(s[q-1]==s[q]){
+				dist-=1;
+			}
+			else{
+				dist+=1;
+			}
+		}
+		print(dist)
+
+		if(q+1<n){
+			if(s[q+1]==s[q])
+				dist-=1;
+			else
+				dist+=1;
+		}
+		print(dist);
+
+		s[q] = (s[q]=='1' ? '0' : '1' );
+
+		print(dist);
+		print(s);
+		cout<<dist<<endl;
+	}
+
 }

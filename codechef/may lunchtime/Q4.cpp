@@ -72,12 +72,41 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void solve(){
-	int n;
-	cin>>n;
+pair<int, int> maxsubarray(vector<long long> &arr, int l, int r)
+{
+	if(r<0 || l>=(int)arr.size() || r<l)
+		return make_pair(-1, -1);
+	if(l==r)
+		return make_pair(l, l);
 
-	if(n&1)
-		cout<<n/2+1;
-	else
-		cout<<n/2;
+	vector<long long> dp(r-l+1), left(r-l+1), right(r-l+1);
+	dp[0]=arr[l], left[0]=l, right=l;
+	long long ans=arr[l];
+	for(int i=l+1;i<=r;i++){
+		dp[i] = max(arr[i], dp[i-1]+arr[i]);
+		if(dp[i]==arr[i])
+			left[i]=i;
+		else
+			left[i] = left[i-1];
+		
+		if(ans<dp[i]){
+			ans = dp[i];
+			right = i;
+		}
+
+	}
+	return make_pair(left[right], right);
+}
+
+void solve(){
+	int n, k;
+	cin>>n>>k;
+
+	vector<long long> arr(n), sum(n);
+	for(int i=0;i<n;i++) cin>>arr[i];
+	for(int i=0;i<n;i++){
+		sum[i] = (i==0 ? arr[i] : sum[i-1]+arr[i]);
+	}
+
+	cout<<ans;
 }

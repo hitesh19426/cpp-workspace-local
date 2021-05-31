@@ -55,6 +55,22 @@ template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i
 
 /*----------------------------------------------------------------------------------------------------*/
 
+vector<long long> primes;
+vector<bool> is_prime;
+void sieve(long long n)
+{
+	is_prime = vector<bool>(n+1, true);
+	for (ll i=2;i<=n;i++) 
+	{
+		if (is_prime[i])
+		{
+			primes.emplace_back(i);
+			for (ll j=i*i;j<=n;j+=i)
+				is_prime[j]=false;
+		}
+	}
+}
+
 int main(int argc, char const *argv[])
 {
 	/* code */
@@ -63,21 +79,30 @@ int main(int argc, char const *argv[])
 	freopen("errorf.in", "w", stderr);
 #endif
 
+	sieve(10000000);
+
 	int t=1;
 	cin>>t;
+
 	while(t--){
-		solve();
-		cout<<endl;
+		int n;
+		cin>>n;
+		if(n==2){
+			cout<<1<<endl;
+			continue;
+		}
+		if(n==3){
+			cout<<2<<endl;
+			continue;
+		}
+		
+		int x = upper_bound(primes.begin(), primes.end(), n) - primes.begin();
+		
+		int primes_lt_n=upper_bound(primes.begin(), primes.end(), n/2) - primes.begin();
+		
+		// cout<<x<<endl;
+		cout<< x - primes_lt_n + 1 <<endl;
 	}
+
 	return 0;
-}
-
-void solve(){
-	int n;
-	cin>>n;
-
-	if(n&1)
-		cout<<n/2+1;
-	else
-		cout<<n/2;
 }

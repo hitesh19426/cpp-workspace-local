@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 void solve();
+class Tree;
 
 #define ll long long
 #define ld long double
@@ -72,12 +73,78 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
+vb special;
+vector<int> parent;
+vector<vector<int>> tree;
+
+void addEdge(int u, int v)
+{
+	tree[u].emplace_back(v);
+	tree[v].emplace_back(u);
+}
+
+int bfs(int src, int n)
+{
+	vector<bool> vis(n, false);
+
+	vis[src] = true;
+	queue<int> q;
+	q.push(src);
+
+	int count=0;
+	while(!q.empty())
+	{
+		int u = q.front();
+		q.pop();
+
+		int x = u;
+		if( special[x] ){
+			while( x!=0 && !special[parent[x]] ){
+				count++;
+				swap(special[x], special[parent[x]]);
+				x = parent[x];
+			}
+		}
+
+		for(int v:tree[u])
+		{
+			if(!vis[v])
+			{
+				vis[v] = true;
+				q.push(v);
+			}
+		}
+	}
+
+	return count;
+}
+
+
 void solve(){
 	int n;
-	cin>>n;
+	string s;
+	cin>>n>>s;
 
-	if(n&1)
-		cout<<n/2+1;
-	else
-		cout<<n/2;
+	parent = vi(n, -1);
+	for(int i=1;i<n;i++) {
+		int x ;
+		cin>>x;
+		parent[i]=x-1;
+	}
+
+	tree = vector<vector<int>>(n, vector<int>());
+	for(int i=1;i<n;i++){
+		addEdge(i, parent[i]);
+	}
+
+	special = vb(n, false);
+	for(int i=0;i<n;i++){
+		if(s[i]=='1'){
+			special[i]=true;
+		}
+	}
+
+	int count = bfs(0, n);
+	cout<<count;
+
 }

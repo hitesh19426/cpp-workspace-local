@@ -12,7 +12,6 @@ void solve();
 #define vvi vector<vector<int>>
 #define vpii vector<pair<int, int>>
 #define pll pair<long long, long long>
-
 #define endl '\n'
 #define nline '\n'
 #define inf INT_MAX
@@ -73,11 +72,31 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	int n;
-	cin>>n;
+	int n, m;
+	cin>>n>>m;
 
-	if(n&1)
-		cout<<n/2+1;
-	else
-		cout<<n/2;
+	string s;
+	cin>>s;
+
+	int one=0;
+	set<int> old, news;
+	for(int i=0;i<n;i++){
+		if(s[i]=='1'){
+			one++;
+		}
+	}
+	if(one==0 || one==n){
+		cout<<s;
+		return;
+	}
+	// print(s);
+
+	for(int i=0;i<n;i++){
+		if(s[i]=='1'){
+			if(i-1>=0 && s[i-1]=='0' && index[i-1]==0)
+		}
+	}
+
+	cout<<s;
+
 }

@@ -73,11 +73,21 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	int n;
-	cin>>n;
+	int a, b, c, d, k;
+	cin>>a>>b>>c>>d>>k;
 
-	if(n&1)
-		cout<<n/2+1;
-	else
-		cout<<n/2;
+	int moves = abs(c-a) + abs(d-b);
+	if(moves>k){
+		cout<<"NO";
+		return ;
+	}
+
+	k -=moves;
+
+	if(k&1){
+		cout<<"NO";
+		return ;
+	}
+
+	cout<<"YES";
 }
