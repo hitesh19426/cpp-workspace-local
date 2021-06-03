@@ -71,41 +71,37 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-bool check(vector<int> &a, vi &b, double fuel, double m)
+bool check(vll &x, vll &v, double t)
 {
-	int n=a.size();
-	for(int i=0;i<n;i++){
-		fuel -= (m+fuel)/(double)a[i];
-		fuel -= (m+fuel)/(double)b[i];
+	double low=-DBL_MAX, high=DBL_MAX, n=x.size();
+	for(int i=0;i<n;i++)
+	{
+		low = max(low, x[i]-v[i]*t);
+		high = min(high, x[i]+v[i]*t);
 	}
 
-	return (fuel<0 ? false : true);
+	return (low>high ? false : true);
 }
 
 void solve(){
-	int n, m;
-	cin>>n>>m;
+	int n;
+	cin>>n;
 
-	vi a(n), b(n);
-	for(int i=0;i<n;i++){
-		cin>>a[i];
-	}
-	for(int i=0;i<n;i++){
-		cin>>b[i];
-	}
+	vll arr(n), speed(n);
+	rep(i, n) cin>>arr[i]>>speed[i];
 
-	double l=0, r=2000'000'000, ans=-1;
-	for(int i=0;i<100;i++){
-		double mid=l+(r-l)/2;
-		if(check(a, b, mid, m)){
-			ans = mid;
-			r=mid;
+	double l=0, r=100'000'000'000, ans=-1;
+	for(int i=0;i<100;i++)
+	{
+		double m = l+(r-l)/2;
+		if(check(arr, speed, m)){
+			ans = r = m;
 		}
 		else{
-			l=mid;
+			l=m;
 		}
 	}
 
-	cout<<setprecision(20)<<ans;
+	cout<<setprecision(15)<<ans;
 }
 

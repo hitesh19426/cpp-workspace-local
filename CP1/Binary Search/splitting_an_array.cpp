@@ -71,41 +71,103 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-bool check(vector<int> &a, vi &b, double fuel, double m)
+// bool check(vll &arr, ll mid, int k)
+// {
+// 	// count is how many buckets/segments are full, sum is sum of last segment
+// 	// wrong answer, for mid = 12, if you put 4 in 8 bucket and 5 in 4 bucket, you get a maximum sum of 12
+// 	// but here you are getting a maximum sum of 13. general feeling is that you will try to combine small
+// 	//  elements with big elements so overall sum can be balanced, however, here you are grouping elements 
+// 	//  value wise (assending/descending)
+// 	// long long sum=0, count=0, n=arr.size();
+// 	for(int i=0;i<n;i++){
+		
+// 		if(arr[i]>mid)
+// 			return false;
+// 		sum += arr[i];
+
+// 		if(sum>mid){
+// 			count++;
+// 			sum = arr[i];
+// 		}
+
+// 	}
+// 	count++;
+
+// 	return (count<=k ? true : false);
+// }
+
+
+bool check(vll &arr, ll mid, int k)
 {
-	int n=a.size();
-	for(int i=0;i<n;i++){
-		fuel -= (m+fuel)/(double)a[i];
-		fuel -= (m+fuel)/(double)b[i];
+	int n=arr.size();
+	long long sum=0, l=0, r=n-1, count=0;
+	while(l<=r){
+		
+		if(arr[r]>mid)
+			return false;
+
+		while(sum+arr[r]<=mid){
+			sum += arr[r];
+			r--;
+		}
+		while(sum+arr[l]<=mid){
+			sum += arr[l];
+			l++;
+		}
+		
+		count++;
+		sum=0;
+		if(count>k)
+			return false;
 	}
 
-	return (fuel<0 ? false : true);
+	if(mid==13){
+		print(count);
+	}
+
+	return (count<=k ? true : false);
 }
 
+
 void solve(){
-	int n, m;
-	cin>>n>>m;
+	int n, k;
+	cin>>n>>k;
 
-	vi a(n), b(n);
+	vll arr(n);
 	for(int i=0;i<n;i++){
-		cin>>a[i];
+		cin>>arr[i];
 	}
-	for(int i=0;i<n;i++){
-		cin>>b[i];
-	}
+	sort(arr.begin(), arr.end());
 
-	double l=0, r=2000'000'000, ans=-1;
-	for(int i=0;i<100;i++){
-		double mid=l+(r-l)/2;
-		if(check(a, b, mid, m)){
+	long long l=0, r=1000'000'000'000'000, ans=-1;
+	string ins="inside";
+	while(l<=r){
+		long long mid=l+(r-l)/2;
+		print(l);
+		print(r);
+		cerr << "before check\n";
+		// cerr<<endl;cerr<<endl;
+
+		if(check(arr, mid, k)){
+			// print(ins);
+			print(mid);
+
 			ans = mid;
-			r=mid;
+			r=mid-1;
+			
+			// print(mid);
+			print(ans);
+			// print(r);
+			// print(l);
 		}
 		else{
-			l=mid;
+			l=mid+1;
 		}
+		print(l);
+		print(r);
+		cerr<<endl;
 	}
 
-	cout<<setprecision(20)<<ans;
+	cout<<ans;
 }
 

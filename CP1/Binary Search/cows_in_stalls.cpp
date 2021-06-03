@@ -63,7 +63,7 @@ int main(int argc, char const *argv[])
 #endif
 
 	int t=1;
-	// cin>>t;
+	cin>>t;
 	while(t--){
 		solve();
 		cout<<endl;
@@ -71,41 +71,44 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-bool check(vector<int> &a, vi &b, double fuel, double m)
+bool check(vll &arr, ll mid, int k)
 {
-	int n=a.size();
-	for(int i=0;i<n;i++){
-		fuel -= (m+fuel)/(double)a[i];
-		fuel -= (m+fuel)/(double)b[i];
+	long long last=arr[0], n=arr.size(), len=1;
+	for(int i=1;i<n;i++){
+		if(arr[i]-last >= mid){
+			last = arr[i];
+			len++;
+		}
+		if(len==k)
+			return true;
 	}
 
-	return (fuel<0 ? false : true);
+	return false;
 }
 
 void solve(){
-	int n, m;
-	cin>>n>>m;
+	int n, k;
+	cin>>n>>k;
 
-	vi a(n), b(n);
+	vll arr(n);
 	for(int i=0;i<n;i++){
-		cin>>a[i];
+		cin>>arr[i];
 	}
-	for(int i=0;i<n;i++){
-		cin>>b[i];
-	}
+	sort(arr.begin(), arr.end());
 
-	double l=0, r=2000'000'000, ans=-1;
-	for(int i=0;i<100;i++){
-		double mid=l+(r-l)/2;
-		if(check(a, b, mid, m)){
+	long long l=0, r=1000'000'000'000'000'000, ans=-1;
+	while(l<=r){
+		long long mid=l+(r-l)/2;
+
+		if(check(arr, mid, k)){
 			ans = mid;
-			r=mid;
+			l=mid+1;
 		}
 		else{
-			l=mid;
+			r=mid-1;
 		}
 	}
 
-	cout<<setprecision(20)<<ans;
+	cout<<ans;
 }
 

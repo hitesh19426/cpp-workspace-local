@@ -75,27 +75,31 @@ void solve(){
 	long long n, x, y;
 	cin>>n>>x>>y;
 
-	long long l=1, r=1000'000'000, ans=-1;
+	long long l=1, r=10'000'000'000, ans=-1;
 	while(l<=r) {
 		long long m=l+(r-l)/2;
-		long long cop = (m/x)*(m/y);
 
-		if (cop>n){
+		long long left = m - min(x, y);
+		long long cop = (m>=min(x, y) ? 1 + (left/x)+(left/y) : 0);
+
+		if (cop>=n){
 			print(l);
 			print(m);
 			print(r);
-			print(ans);
-			cerr<<endl;
+			print(cop);
+			print(left/x);
+			print(n);
 
 			ans = m;
 			r = m-1;
+
+			print(ans);
+			cerr<<endl;
 		}
 		else{
 			l=m+1;
 		}
 	}
-
-	cout<<ans<<endl;
-
+	
+	cout<<ans;
 }
-

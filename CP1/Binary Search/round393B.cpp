@@ -71,41 +71,51 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-bool check(vector<int> &a, vi &b, double fuel, double m)
+bool check(long long n, long long m, long long k, long long maxp)
 {
-	int n=a.size();
-	for(int i=0;i<n;i++){
-		fuel -= (m+fuel)/(double)a[i];
-		fuel -= (m+fuel)/(double)b[i];
-	}
+	long long count=0;
+	// for(long long i=k, j=maxp;i>0; i--, j--){
+	// 	count += (j<=0 ? 1 : j); 
+	// 	if(count>m)
+	// 		return false;
+	// }
+	// for(long long i=k+1, j=maxp-1; i<=n; i++, j--){
+	// 	count += (j<=0 ? 1 : j);
+	// 	if(count>m)
+	// 		return false;
+	// }
+	long long leftcount, rightcount;
+	if(n-k+1 > maxp)
+		rightcount = (maxp*(maxp+1))/2 + n-k+1-maxp;
+	else
+		rightcount = ((n-k+1)*(2*maxp-n+k))/2;
 
-	return (fuel<0 ? false : true);
+	if(maxp>=k)
+		leftcount = ((k-1)*(2*maxp-k))/2;
+	else
+		leftcount = (maxp*(maxp-1))/2 + k-maxp;
+
+	count = leftcount + rightcount;
+
+	return (count<=m ? true : false);
 }
 
 void solve(){
-	int n, m;
-	cin>>n>>m;
+	long long n, m, k;
+	cin>>n>>m>>k;
 
-	vi a(n), b(n);
-	for(int i=0;i<n;i++){
-		cin>>a[i];
-	}
-	for(int i=0;i<n;i++){
-		cin>>b[i];
-	}
-
-	double l=0, r=2000'000'000, ans=-1;
-	for(int i=0;i<100;i++){
-		double mid=l+(r-l)/2;
-		if(check(a, b, mid, m)){
+	long long l=1, r=m, ans=-1;
+	while(l<=r){
+		long long mid=l+(r-l)/2;
+		if(check(n, m, k, mid)){
 			ans = mid;
-			r=mid;
+			l=mid+1; 
 		}
 		else{
-			l=mid;
+			r=mid-1;
 		}
 	}
 
-	cout<<setprecision(20)<<ans;
+	cout<<ans;
 }
 
