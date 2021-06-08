@@ -269,7 +269,7 @@ public:
 		return RMQ(infirst[a], infirst[b]);
 	}
 
-	void eulertype1()
+	void eulertype1(int src)
 	{
 		infirst = vector<int>(n, -1);
 		outlast = vector<int>(n, -1);
@@ -279,7 +279,7 @@ public:
 		euler1_dfs(src, time);
 	}
 
-	euler1_dfs(int src, int &time)
+	void euler1_dfs(int src, int &time)
 	{
 		if(vis[src])
 			return ;
@@ -316,7 +316,7 @@ public:
 
 		logs2[1] = 0;
 		for(int i=2;i<n;i++)
-			log2[i] = logs2[i/2]+1;
+			logs2[i] = logs2[i/2]+1;
 	}
 
 	int RMQ(int a, int b)
@@ -336,4 +336,109 @@ int main(int argc, char const *argv[])
 {
 	/* code */
 	return 0;
+}
+
+
+int N, dia1, dia2;
+vector<vector<int>> tree;
+vector<vector<int>> up;
+vector<bool> vis;
+vector<int> depth;
+vector<int> parent;
+
+void addEdge(int a, int b){
+	tree[a].eb(b);
+	tree[b].eb(a);
+}
+
+void bfs(int src){
+	vis = vector<bool>(N, false);
+	parent = vector<int>(N, -1);
+	depth = vector<int> (N, INT_MAX);
+
+	queue<int> q;
+	q.push(src);
+	depth[src] = 0;
+	vis[src]=true;
+
+	while(!q.empty()){
+		int u=q.front();
+		q.pop();
+
+		for(int v:tree[u]){
+			if(!vis[v]){
+				q.push(v);
+				vis[v]=true;
+				depth[v]=depth[u]+1;
+				parent[v]=u;
+			}
+		}
+	}
+}
+
+int diameter(){
+	bfs(1);
+	int max_dist=-1;
+	for(int i=0;i<N;i++){
+		if(depth[i]!=INT_MAX && depth[i]>max_dist){
+			max_dist = depth[i];
+			dia1=i;
+		}
+	}
+
+	bfs(dia1);
+	int diameter = -1;
+	for(int i=0;i<N;i++){
+		if(depth[i]!=INT_MAX && depth[i]>diameter){
+			diameter = depth[i];
+			dia2=i;
+		}
+	}
+	return diameter;
+}
+
+void binary_lifting() {
+	bfs(1);
+	parent[1]=1;
+	up=vector<vector<int>> (N, vector<int>(21, 0));
+
+	for(int i=1;i<N;i++)
+		up[i][0]=parent[i];
+
+	for(int j=1;j<21;j++)
+		for(int i=1;i<N;i++)
+			up[i][j] = up[up[i][j-1]][j-1];
+}
+
+int LCA(int a, int b){
+
+	if(depth[a]<depth[b])
+		swap(a, b);
+
+	int k=depth[a]-depth[b];
+	for(int j=20;j>=0;j--)
+		if( k & (1<<j))
+			a = up[a][j];
+
+	if(a==b)
+		return a;
+
+	for(int j=20;j>=0;j--){
+		if(up[a][j]!=up[b][j]){
+			a=up[a][j];
+			b=up[b][j];
+		}
+	}
+	return up[a][0];
+}
+
+int distance(int a, int b){
+	int lca = LCA(a, b);
+	return depth[a] + depth[b] - 2*depth[lca];
+}
+
+int max_dist(int x){
+	int a = distance(x, dia1);
+	int b = distance(x, dia2);
+	return max(a, b);
 }
