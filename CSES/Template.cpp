@@ -1,17 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 void solve();
+
+#define endl '\n'
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 
 #define ll long long
 #define ld long double
 #define ull unsigned long long
-#define endl '\n'
 #define nline '\n'
-#define inf 1000000000
+#define INF INT_MAX
 #define mod 1000000007
 #define mod1 998244353
-#define inf_ll (ll)1e18
+#define INFLL LLONG_MAX
 #define PI 3.141592653589793238462
 
 #define vi vector<int>

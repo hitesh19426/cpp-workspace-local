@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
+void solve();
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 
 #define ll long long
 #define ld long double
@@ -23,17 +25,12 @@ using namespace std;
 #define rep(i, n)	for (int i=0;i<n;i++)
 #define reps(i, a, n)	for (int i=a;i<n;i++)
 #define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
-#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
-void solve();
-
-
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
 #else
 #define print(x)
 #endif
-
 void _print(ll t) {cerr << t;}
 void _print(ld t) {cerr << t;}
 void _print(ull t) {cerr << t;}
@@ -47,8 +44,6 @@ template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_prin
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
-
-
 
 /*----------------------------------------------------------------------------------------------------*/
 
@@ -69,39 +64,28 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-ll mod_add(ll a, ll b){
-	return (a%mod + b%mod)%mod;
-}
-
-ll ways(int n, vi &dp, vi &coins){
-	if(n<0)
-		return 0;
-	if(dp[n]!=-1)
-		return dp[n];
-
-	ll count = 0;
-	for(int i=0;i<((int)coins.size());i++){
-		count = mod_add(count, ways(n-coins[i], dp, coins) );
-	}
-
-	dp[n] = count;
-	return dp[n];
-}
-
 void solve(){
 	int n, x;
 	cin>>n>>x;
 
-	vi arr(n);
+	long long arr[n];
 	rep(i, n) cin>>arr[i];
 
-	vi dp(x+1, -1);
+	long long dp[x+1];
+	memset(dp, 0, sizeof(dp));
 	dp[0] = 1;
 
-	ll ans = ways(x, dp, arr);
+	for(int i=1; i<=x; i++)
+	{
+		for(int j=0; j<n; j++)
+		{
+			if( i-arr[j]>=0 ){
+				dp[i] = ( dp[i]+dp[i-arr[j]] )%mod;
+			}
+		}
+	}
 
-	print(dp);
-	cout<<ans;
+	cout<<dp[x];
 
 }
 

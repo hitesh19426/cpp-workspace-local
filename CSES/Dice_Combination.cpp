@@ -1,43 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
+void solve();
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 
-#define ll long long
-#define ld long double
-#define ull unsigned long long
 #define endl '\n'
 #define mod 1000000007
-
-
-
-#define vi vector<int>
-#define pii pair<int, int>
-#define pll pair<long long, long long>
-#define vpii vector<pair<int, int>>
-#define vll vector<long long>
-#define vvi vector<vector<int>>
-
-
-
-
-#define ff first
-#define ss second
-#define pb push_back
-#define mp make_pair
-#define eb emplace_back
-#define rep(i, n)	for (int i=0;i<n;i++)
-#define reps(i, a, n)	for (int i=a;i<n;i++)
-#define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
-#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
-void solve();
-
-
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
 #else
 #define print(x)
 #endif
-
 void _print(ll t) {cerr << t;}
 void _print(ld t) {cerr << t;}
 void _print(ull t) {cerr << t;}
@@ -51,8 +24,6 @@ template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_prin
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
-
-
 
 /*----------------------------------------------------------------------------------------------------*/
 
@@ -73,32 +44,21 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-ll ways(int n, vll &dp)
-{
-	if(n<0)
-		return 0;
-	if(n==0)
-		return 1;
-	if(dp[n]!=-1)
-		return dp[n];
-
-	ll count = 0;
-	for(int i=1;i<=6;i++)
-	{
-		count = (count%mod + ways(n-i, dp)%mod)%mod;
-	}
-
-	dp[n] = count;
-	return dp[n];
-}
-
-
 void solve(){
 	int n;
 	cin>>n;
 
-	vll dp(n+1, -1);
+	long long dp[n+1];
+	memset(dp, 0, sizeof(dp));
+	dp[0] = 1;
 
-	cout<<ways(n, dp);
+	for(int i=0; i<=n; i++){
+		for(int j=1; j<=6; j++){
+			if(i-j>=0)
+				dp[i] = (dp[i] + dp[i-j])%mod;
+		}
+	}
+
+	cout<<dp[n];
 }
 
