@@ -64,7 +64,7 @@ int main(int argc, char const *argv[])
 #endif
 
 	int t=1;
-	// cin>>t;
+	cin>>t;
 	while(t--){
 		solve();
 		cout<<endl;
@@ -73,5 +73,8 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	int n, m, i, j;
+	cin>>n>>m>>i>>j;
+
+	cout<<1<<" "<<1<<" "<<n<<" "<<m;
 }

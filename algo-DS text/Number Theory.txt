@@ -1,0 +1,108 @@
+Q1. How to find if a number is perfect square. O(1)
+
+Sol: For any perfect square x, it has to be of the form k*k = x where k is an integer
+
+Steps:
+	1. Take integer root of number
+	2. Square that number and check if it is equal to x
+	3. If yes, true else false
+	
+Pseudo Code:
+	k <- (int)sqrt(x)
+	if (k*k == x)
+		return true
+	return false
+	
+Q2. How to check if a number n is prime. O(root(n))
+
+Sol: Check if it is divisible by any number, if divisible then no else yes
+Trick : The highest possible divisor is sqrt(n), so only need to loop till it.
+
+Pseudo Code:
+	for i <- 1 to sqrt(n):
+		if (n%i == 0)
+			return NO;
+	return YES
+	
+Q3. Find number with exactly 3 divisors.
+
+Solution: Squares of prime numbers have exactly 3 divisors. SO just check for that.
+	
+Q4. Find all prime numbers till n. Best - O(n) Current - O(nloglogn)
+Trick : Use sieve of eranthonses
+
+Steps: 
+	1. Make a list of all numbers till n
+	2. Mark each as prime
+	3. Mark 0 and 1 as non-primes
+	4. Iterate over the list and for each primes, mark its multiple as non-primes
+	5. You can start with prime*prime because you would have already marked every multiple before it.
+
+Algo:
+	bool is_prime[n+1]
+	primes <- {} (empty set)
+	is_prime <- true;
+	is_prime[0] = is_prime[1] = false
+	for i <- 2 to n:
+		if i is prime:
+			prime <- prime + {i};
+			for j <- i*i to n:
+				is_prime[j] <- false;
+	
+	primes is set of all primes <= n
+	
+Q5. Binary exponentiation -- x^n -- O(logn)
+
+Idea: Divide power in half and then calculate that recursively to calculate it
+
+Algo:
+	power(x, n):
+		if n==0
+			return 1
+		if n==1
+			return x
+			
+		val <- power(x, n/2)
+		if n==odd
+			return val*val*x
+		return val*val
+	
+Q6. Mod power -- (x^n)%mod -- O(logn)
+Idea : Use above theorem with mod
+
+Algo:
+	power(x, n, m):
+		if n==0
+			return 1%mod
+		if n==1
+			return x%mod
+			
+		val <- power(x, n/2)
+		if n==odd
+			return ((val%mod)*(val%mod)*(x%mod))%mod
+		return ((val%mod)*(val%mod))%mod
+	
+	Note: In order to avoid more overflow, do ( ((val%mod)*(val%mod))%mod * (x%mod) )% mod
+	or take ll (would still have overflow with large mod and x)
+	
+General idea: (a+b)%p = (a%p + b%p) % p
+			(a*b)%p	= (a%p * b%p)%p	
+			(a-b)%p	= (a%p - b%p)%p   -- look not -ve val mod
+			Solution : (a-b)%pow = ((a-b) % p + p) % p 	-- this takes care of -ve remainders
+						or
+						int ans = (a%p - b%p)%p
+						if (ans<0)	ans += p;
+
+			(a/b)%p	= (a%p / b%p)%p	-- does not work
+			Solution : for prime numbers p
+			(a/b)%p = (a*inverse(b))%p = (a*power(b, p-2))%p  -- if p is prime
+
+			for non-prime:
+			inverse(b) = phi(b)-1, where phi is some function
+			
+Note IMP : -ve number mod
+	modulo(a, b):
+		if (a%b<0)
+			return a%b + b
+		return a%b
+

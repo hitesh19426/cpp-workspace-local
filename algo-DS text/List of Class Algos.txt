@@ -1,0 +1,83 @@
+4 basics algo categories:
+	1. Divide & Conquer
+	2. DP
+	3. Greedy
+	4. Graphs
+	
+Class Questions/Algorithms from Class/Tut
+1. Divide & Conquer
+	1. Master Theorem
+	2. Karatsuba's Algo for multiplication - n^1.59
+	3. Counting Inversions - nlogn
+	4. Closest pair of points - nlogn
+		Variations:
+		a. Find closet 3 points st sum of all 3 sides is minimum
+	5. Find maximum sum subarray - nlogn but best n by dp
+	
+	6. Finding Majority - nlogn but best n using moore's voting algo
+	7. Finding kth smallest element of two sorted array - logn
+		Special : if k>n
+	8. Local minimum/maximum - logn
+	9. Find local minimum/maximum in m*n matrix - nlogm 
+	
+	Classic Algorithms:
+	1. Binary Search
+		Variations: answer storing, direct search by disarding half array
+	2. Merge Sort - nlogn
+	3. Quick Sort - n^2
+	4. Insert Sort - n^2
+	5. Heap Sort - nlogn
+	
+	
+2. DP
+	1. Maximum sum st no 2 elements are consecutive
+		Variations:
+		a. Maximum sum st no 3 elements are consecutive
+		b. Maximum sum st no k elements are consecutive
+		c. Maximum sum st no 3 consecutive elements are left
+	2. Sequence alignmnet - 
+	3. Maximum profit via job scheduling - n^2 by dp but best nlogn
+	4. Knapsack - n*v
+	5. Optimal Binary Search tree
+	
+	Link: https://drive.google.com/file/d/1a_toXcD3cpatEycs8i_BrNUN_YzyRIOJ/view
+	5. Matrix Chain multiplication - optimal BST application
+	6. Knapsack Cover
+	7. Dictionary
+	8. Box Stacking
+	
+	
+	1. Maximum sum subarray - n
+	2. Largest common subsequence - m*n
+	3. Longest increasing subsequence - n^2 and nlogn
+	
+3. Greedy
+	1. Input: n jobs for each job weight wi and processing time ti, 
+	output: A schedule to minimize sum of weighted completion time ie, wj*cj
+	2. Given n intervals, color them st no two intersecting intervals have same color
+	Hint: sort by start point
+	3. Maximum independent subset of non-intersecting intervals
+	Hint: sort by end points, always pick 1st interval
+	Variation: on codechef, max arriving guests at any point
+	
+	Link: https://drive.google.com/file/d/1rVbWLpXe7YCdOSjYu1Wsca3qszpnROoU/view
+	1. Maximum switching subsequence
+	
+	
+4. Graphs:
+	1. Krukshal for MST
+	2. Prims for MST
+	3. 
+	4. 
+	5. 
+	6. 
+
+
+Algorithms learned:
+	1. Segement Tree
+	
+	Number Theory:
+	1. check whether a number is prime or not
+	2. Check whether a number is 3-prime(has only three factors) or not.
+	3. Sieve of eranthoses
+	4. How to find number with 3 factors only

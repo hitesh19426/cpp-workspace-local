@@ -64,7 +64,7 @@ int main(int argc, char const *argv[])
 #endif
 
 	int t=1;
-	// cin>>t;
+	cin>>t;
 	while(t--){
 		solve();
 		cout<<endl;
@@ -73,5 +73,16 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	int n;
+	cin>>n;
+
+	int arr[n];
+	rep(i, n) cin>>arr[i];
+
+	int sum=0;
+	rep(i, n) sum+= arr[i];
+
+	if(sum<n)
+		cout<<1;
+	else cout<<sum-n;
 }

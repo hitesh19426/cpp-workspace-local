@@ -64,7 +64,7 @@ int main(int argc, char const *argv[])
 #endif
 
 	int t=1;
-	// cin>>t;
+	cin>>t;
 	while(t--){
 		solve();
 		cout<<endl;
@@ -73,5 +73,31 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	int n;
+	cin>>n;
+
+	int arr[n];
+	rep(i, n) cin>>arr[i];
+
+	sort(arr, arr+n);
+	int diff=INT_MAX, l=-1, r=-1;
+	for(int i=0; i<n-1; i++)
+	{
+		if(arr[i+1]-arr[i]<diff) {
+			diff = arr[i+1]-arr[i];
+			r=i+1;
+			l=i;
+		}
+	}
+
+	int ans[n], k=1, i;
+	ans[0] = arr[l], ans[n-1] = arr[l+1];
+
+	for( i=l+2; i<n; i++, k++)
+		ans[k] = arr[i];
+	for( i=0; i<l; i++, k++)
+		ans[k] = arr[i];
+
+	for(int i:ans)
+		cout<<i<<" ";
 }

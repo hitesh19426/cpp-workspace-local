@@ -73,5 +73,38 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	int n, k;
+	cin>>n>>k;
+
+	string s;
+	cin>>s;
+
+	string final = "";
+	int LOG = ceil(log2(k));
+	for(int i=1; i<=n; i++){
+		string str = s.substr(0, i);
+		string ans="";
+		vector<string> arr(LOG);
+
+
+		arr[0] = str;
+		for(int j=1; j<LOG; j++){
+			arr[j] = arr[j-1].append(arr[j-1]);
+		}
+
+		// print(arr);
+
+		int times = ceil((double)k/i);
+		for(int j=0; j<LOG; j++){
+			if(times & (1<<j))
+				ans.append(arr[j]);
+		}
+
+		if(final=="")
+			final = ans.substr(0, k);
+		else if(ans.substr(0, k) < final)
+			final = ans.substr(0, k);
+	}
+
+	cout<<final;
 }
