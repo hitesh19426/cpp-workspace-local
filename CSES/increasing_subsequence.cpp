@@ -2,15 +2,17 @@
 using namespace std;
 void solve();
 
+#define endl '\n'
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
+
 #define ll long long
 #define ld long double
 #define ull unsigned long long
-#define endl '\n'
 #define nline '\n'
-#define inf 1000000000
+#define INF INT_MAX
 #define mod 1000000007
 #define mod1 998244353
-#define inf_ll (ll)1e18
+#define INFLL LLONG_MAX
 #define PI 3.141592653589793238462
 
 #define vi vector<int>
@@ -30,7 +32,6 @@ void solve();
 #define rep(i, n)	for (int i=0;i<n;i++)
 #define reps(i, a, n)	for (int i=a;i<n;i++)
 #define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
-#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
@@ -51,7 +52,7 @@ template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
-/*----------------------------------------------------------------------------------------------------*/
+//----------------------------------------------------------------------------------------------------//
 
 int main(int argc, char const *argv[])
 {
@@ -71,21 +72,19 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	int n1;
-	cin>>n1;
+	int n;
+	cin>>n;
 
-	vector<int> arr1(n1);
-	for(int i=0;i<n1;i++) cin>>arr1[i];
-	
-	int n2;
-	cin>>n2;
+	int arr[n];
+	for(int i=0; i<n; i++) cin>>arr[i];
 
-	vector<int> arr2(n2);
-	for(int i=0;i<n2;i++) cin>>arr2[i];
-
-	for(int i=0;i<n2;i++){
-		int ind = lower_bound(arr1.begin(), arr1.end(), arr2[i])-arr1.begin();
-		cout<<n1-ind<<" ";
+	vector<int> dp;
+	for(int i:arr){
+		if(dp.empty() || dp.back()<i)
+			dp.push_back(i);
+		else
+			dp[lower_bound(dp.begin(), dp.end(), i) - dp.begin()] = i;
 	}
 
+	cout<<dp.size();
 }

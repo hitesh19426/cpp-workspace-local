@@ -38,21 +38,24 @@ void solve();
 #else
 #define print(x)
 #endif
+
+void _print(char t) {cerr << t;}
+void _print(int t) {cerr << t;}
+void _print(double t) {cerr << t;}
 void _print(ll t) {cerr << t;}
 void _print(ld t) {cerr << t;}
 void _print(ull t) {cerr << t;}
-void _print(int t) {cerr << t;}
-void _print(char t) {cerr << t;}
-void _print(double t) {cerr << t;}
 void _print(string t) {cerr << t;}
 template <class T, size_t N> void _print(T (&arr)[N]) {cerr << "[ "; for(T v:arr) { cerr<< (v) <<" "; } cerr<<"]";}
 template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
 template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(set <T, greater<T>> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
+template <class T> void _print(multiset <T, greater<T>> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
-//----------------------------------------------------------------------------------------------------*/
+//----------------------------------------------------------------------------------------------------//
 
 int main(int argc, char const *argv[])
 {
@@ -66,49 +69,21 @@ int main(int argc, char const *argv[])
 	// cin>>t;
 	while(t--){
 		solve();
-		// cout<<endl;
+		cout<<endl;
 	}
 	return 0;
 }
 
 void solve(){
-	int m, n;
-    cin>>m>>n;
+	int n, x;
+	cin>>n>>x;
 
-    long long arr[m][n];
-    for(int i=0;i<m;i++){
-        for(int j=0;j<n;j++){
-            cin>>arr[i][j];
-        }
-    }
+	vector<int> arr(n);
+	for(int i=0; i<n; i++){
+		cin>>arr[i];
+	}
+	print(arr)
 
-    int q;
-    cin>>q;
 
-    while(q--)
-    {
-        long long x;
-        cin>>x;
-        
-        int i=0, j=n-1;
-        bool found=false;
-
-        while(i<n && j>=0)
-        {
-            if(arr[i][j] == x){
-                cout<<i+1 << " "<< j+1<<endl;
-                found = true;
-                break ;
-            }
-            else if( arr[i][j]> x ){
-                j--;
-            }
-            else{
-                i++;
-            }
-        }
-
-        if(!found)
-        	cout<<-1<<endl;
-    }
+	// cout<<ans;
 }
