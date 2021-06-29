@@ -2,6 +2,9 @@
 using namespace std;
 void solve();
 
+#define endl '\n'
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+
 #define ll long long
 #define ld long double
 #define ull unsigned long long
@@ -13,12 +16,11 @@ void solve();
 #define vpii vector<pair<int, int>>
 #define pll pair<long long, long long>
 
-#define endl '\n'
 #define nline '\n'
-#define inf INT_MAX
+#define inf 1000000000
 #define mod 1000000007
 #define mod1 998244353
-#define inf_ll LLONG_MAX
+#define inf_ll (ll)1e18
 #define PI 3.141592653589793238462
 #define ff first
 #define ss second
@@ -31,14 +33,12 @@ void solve();
 #define rep(i, n)	for (int i=0;i<n;i++)
 #define reps(i, a, n)	for (int i=a;i<n;i++)
 #define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
-#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
 #else
 #define print(x)
 #endif
-
 void _print(ll t) {cerr << t;}
 void _print(ld t) {cerr << t;}
 void _print(ull t) {cerr << t;}
@@ -67,54 +67,28 @@ int main(int argc, char const *argv[])
 	cin>>t;
 	while(t--){
 		solve();
-		// cout<<endl;
+		cout<<endl;
 	}
 	return 0;
 }
 
 void solve(){
-	int n, k;
-	cin>>n>>k;
+	int n;
+	cin>>n;
 
-	string s;
-	cin>>s;
-
-	int dist=0;
-	for(int i=0;i<n-1;i++){
-		if(s[i]==s[i+1])
-			dist+=2;
-		else dist+=1;
+	vi arr(n), ind(2*n+1);
+	int ans=0;
+	rep(i, n){
+		cin>>arr[i];
+		ind[arr[i]] = i+1;
 	}
 
-	print(dist);
-	while(k--){
-		int q;
-		cin>>q;
-		q--;
-		
-		if(q-1>=0){
-			if(s[q-1]==s[q]){
-				dist-=1;
-			}
-			else{
-				dist+=1;
+	for(int i=1; i<2*n+1; i++){
+		for(int j=i+1; j<=(2*n)/i; j++){
+			if(ind[j]+ind[i] == i*j && ind[i]!=0 && ind[j]!=0){
+				ans++;
 			}
 		}
-		print(dist)
-
-		if(q+1<n){
-			if(s[q+1]==s[q])
-				dist-=1;
-			else
-				dist+=1;
-		}
-		print(dist);
-
-		s[q] = (s[q]=='1' ? '0' : '1' );
-
-		print(dist);
-		print(s);
-		cout<<dist<<endl;
 	}
-
+	cout<<ans;
 }

@@ -2,6 +2,9 @@
 using namespace std;
 void solve();
 
+#define endl '\n'
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+
 #define ll long long
 #define ld long double
 #define ull unsigned long long
@@ -13,12 +16,11 @@ void solve();
 #define vpii vector<pair<int, int>>
 #define pll pair<long long, long long>
 
-#define endl '\n'
 #define nline '\n'
-#define inf INT_MAX
+#define inf 1000000000
 #define mod 1000000007
 #define mod1 998244353
-#define inf_ll LLONG_MAX
+#define inf_ll (ll)1e18
 #define PI 3.141592653589793238462
 #define ff first
 #define ss second
@@ -31,14 +33,12 @@ void solve();
 #define rep(i, n)	for (int i=0;i<n;i++)
 #define reps(i, a, n)	for (int i=a;i<n;i++)
 #define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
-#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
 #else
 #define print(x)
 #endif
-
 void _print(ll t) {cerr << t;}
 void _print(ld t) {cerr << t;}
 void _print(ull t) {cerr << t;}
@@ -76,8 +76,28 @@ void solve(){
 	int n;
 	cin>>n;
 
-	if(n&1)
-		cout<<n/2+1;
-	else
-		cout<<n/2;
+	vpii arr(n);
+	rep(i, n){
+		cin>>arr[i].ff;
+		arr[i].ss = i+1;
+	}
+	sort(arr.begin(), arr.end());
+	print(arr);
+
+	long long ans=0, sum=0;
+	for(int i=1; i<n; i++){
+		ans += arr[i].ff - arr[i-1].ff;
+	}
+	print(ans);
+
+	for(int i=n-2; i>=0; i--){
+		// ans -= (arr[i+1].ff - arr[i].ff);
+
+		ans -= (sum + arr[i+1].ff - arr[i].ff);
+		sum += arr[i+1].ff - arr[i].ff;
+	}
+
+	cout<<ans;
+	print(ans);
+	cerr << endl;
 }

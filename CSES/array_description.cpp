@@ -1,45 +1,43 @@
 #include <bits/stdc++.h>
 using namespace std;
 void solve();
-class Tree;
+
+#define endl '\n'
+#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 
 #define ll long long
 #define ld long double
 #define ull unsigned long long
+#define nline '\n'
+#define INF INT_MAX
+#define mod 1000000007
+#define mod1 998244353
+#define INFLL LLONG_MAX
+#define PI 3.141592653589793238462
+
 #define vi vector<int>
 #define vb vector<bool>
 #define pii pair<int, int>
 #define vll vector<long long>
 #define vvi vector<vector<int>>
+#define vvb vector<vector<bool>>
 #define vpii vector<pair<int, int>>
 #define pll pair<long long, long long>
 
-#define endl '\n'
-#define nline '\n'
-#define inf INT_MAX
-#define mod 1000000007
-#define mod1 998244353
-#define inf_ll LLONG_MAX
-#define PI 3.141592653589793238462
 #define ff first
 #define ss second
 #define pb push_back
 #define mp make_pair
 #define eb emplace_back
-#define set_bits __builtin_popcountll
-#define all(x) (x).begin(), (x).end()
-
 #define rep(i, n)	for (int i=0;i<n;i++)
 #define reps(i, a, n)	for (int i=a;i<n;i++)
 #define foreach(itr, v) for (auto itr=v.begin();itr!=v.end();itr++)
-#define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 
 #ifndef ONLINE_JUDGE
 #define print(x) cerr<< #x << " = "; _print(x); cerr<<endl;
 #else
 #define print(x)
 #endif
-
 void _print(ll t) {cerr << t;}
 void _print(ld t) {cerr << t;}
 void _print(ull t) {cerr << t;}
@@ -54,7 +52,7 @@ template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i
 template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
 template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
 
-/*----------------------------------------------------------------------------------------------------*/
+//----------------------------------------------------------------------------------------------------//
 
 int main(int argc, char const *argv[])
 {
@@ -65,7 +63,7 @@ int main(int argc, char const *argv[])
 #endif
 
 	int t=1;
-	cin>>t;
+	// cin>>t;
 	while(t--){
 		solve();
 		cout<<endl;
@@ -73,78 +71,46 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-vb special;
-vector<int> parent;
-vector<vector<int>> tree;
-
-void addEdge(int u, int v)
-{
-	tree[u].emplace_back(v);
-	tree[v].emplace_back(u);
-}
-
-int bfs(int src, int n)
-{
-	vector<bool> vis(n, false);
-
-	vis[src] = true;
-	queue<int> q;
-	q.push(src);
-
-	int count=0;
-	while(!q.empty())
-	{
-		int u = q.front();
-		q.pop();
-
-		int x = u;
-		if( special[x] ){
-			while( x!=0 && !special[parent[x]] ){
-				count++;
-				swap(special[x], special[parent[x]]);
-				x = parent[x];
-			}
-		}
-
-		for(int v:tree[u])
-		{
-			if(!vis[v])
-			{
-				vis[v] = true;
-				q.push(v);
-			}
-		}
-	}
-
-	return count;
-}
-
-
 void solve(){
-	int n;
-	string s;
-	cin>>n>>s;
+	int n, m;
+	cin>>n>>m;
 
-	parent = vi(n, -1);
-	for(int i=1;i<n;i++) {
-		int x ;
-		cin>>x;
-		parent[i]=x-1;
-	}
+	int arr[n];
+	for(int i=0; i<n; i++) cin>>arr[i];
 
-	tree = vector<vector<int>>(n, vector<int>());
-	for(int i=1;i<n;i++){
-		addEdge(i, parent[i]);
-	}
+	// int dp[n][m+2];
+	vector<vector<long long>> dp(n, vector<long long>(m+2, 0));
+	// memset(dp, 0, sizeof(dp));
 
-	special = vb(n, false);
-	for(int i=0;i<n;i++){
-		if(s[i]=='1'){
-			special[i]=true;
+	for(int i=0; i<n; i++)
+	{
+		if(arr[i]){
+			if(i==0)
+				dp[i][arr[i]] = 1;
+			else
+				dp[i][arr[i]] = dp[i-1][arr[i]-1] + dp[i-1][arr[i]] + dp[i-1][arr[i]+1];
+			dp[i][arr[i]] %= mod;
+			continue;
+		}
+		for(int j=1; j<=m; j++)
+		{
+			if(i==0)
+				dp[i][j] = 1;
+			else
+				dp[i][j] = dp[i-1][j-1] + dp[i-1][j] + dp[i-1][j+1];
+			dp[i][j] %= mod;
 		}
 	}
 
-	int count = bfs(0, n);
-	cout<<count;
+	if(arr[n-1]){
+		cout<<dp[n-1][arr[n-1]];
+		return;
+	}
 
+	long long sum=0;
+	for(int i=1; i<=m; i++){
+		sum += dp[n-1][i];
+		sum %= mod;
+	}
+	cout<<sum;
 }
