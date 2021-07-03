@@ -19,46 +19,47 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-bool check(vector<long long>& arr, long long mid, int k){
-	int n = arr.size(), count = 0;
+bool check(vector<int>& arr, long long mid, int k){
+	int n = arr.size(), count = 1;
 	long long sum = 0;
-	for( int i=0; i<n; )
+
+	for(int i=0; i<n; i++)
 	{
-		if(arr[i]>mid || count>k)
+		if(arr[i]>mid)
 			return false;
 		
-		while(arr[i]+sum<=mid){
-			sum += arr[i]; i++;
+		if(arr[i]+sum<=mid){
+			sum += arr[i];
+			continue;
 		}
-		sum=0, count++;
+		sum=arr[i], count++;
 	}
-	return true;
+
+	return count<=k;
 }
 
-// find all subarrays segemnt of len k
-// find max in all those segments
-// pick minimum from above.
-// min (max)
-// FFFF TTTTT
-
-// max sum in subarray <=mid 
+// FFFFTTTTTT
 void solve(){
 	int n, k;
 	cin>>n>>k;
 
-	vector<long long> arr(n);
-	for(int i=0; i<n; i++) cin>>arr[i];
+	vector<int> arr(n);
+	long long sum = 0;
+	for(int i=0; i<n; i++){
+		cin>>arr[i];
+		sum += arr[i];
+	}
 
-	long long l=1, r=100'000'000'000'000'000, ans=-1;
+	long long l=1, r=sum, ans=-1;
 	while(l<=r){
-		long long m=l+(r-l)/2;
-		if(check(arr, m, k)){
-			ans = m;
-			r=m-1;
+		long long mid = l+(r-l)/2;
+		if(check(arr, mid, k)){
+			ans = mid, r=mid-1;
 		}
 		else{
-			l=m+1;
+			l=mid+1;
 		}
 	}
+
 	cout<<ans;
 }

@@ -3,9 +3,10 @@ using namespace std;
 void solve();
 
 #define endl '\n'
+#define mod 1000000007
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 
-/*----------------------------------------------------------------------------------------------------*/
+//----------------------------------------------------------------------------------------------------//
 
 int main(int argc, char const *argv[])
 {
@@ -28,16 +29,21 @@ void solve(){
 	int n;
 	cin>>n;
 
-	int len = (1<<n);
-	for(int i=0; i<len; i++){
-		int gi = i ^ (i>>1);
+	int arr[n], rem[n];
+	for(int i=0; i<n; i++)
+		cin>>arr[i];
 
-		for(int j=n-1; j>=0; j--){
-			if(gi & (1<<j))
-				cout<<1;
-			else cout<<0;
-		}
-		cout<<endl;
+	fill(rem, rem+n, 0);
+	long long sum = 0, count = 0;
+
+	for(int i=0; i<n; i++){
+		sum += arr[i];
+		int cur = (sum%n+n)%n;
+		count += rem[cur];
+		rem[cur]++;
+		if(cur==0)
+			count++;
 	}
-}
 
+	cout<<count;
+}

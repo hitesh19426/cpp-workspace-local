@@ -62,15 +62,28 @@ int main(int argc, char const *argv[])
 	freopen("errorf.in", "w", stderr);
 #endif
 
-	int t=1;
-	// cin>>t;
-	while(t--){
-		solve();
-		cout<<endl;
-	}
-	return 0;
-}
 
-void solve(){
-	
+	int n, m;
+	cin>>n>>m;
+
+	int factorial[2000002];
+	factorial[0] = 1;
+	for(int i=1; i<2000002; i++)
+		factorial[i] = factorial[i-1]*i %mod;
+
+	long long dem = factorial[m], pow = mod-2, inverse = 1;
+	print(dem);
+	while(pow>0){
+		if(pow&1)
+			inverse = (inverse*dem)%mod;
+		dem = (dem*dem)%mod;
+		pow >>= 1;
+	}
+	print(factorial[n+m-1]);
+	print(inverse);
+
+	long long ans = (factorial[n+m-1]*inverse)%mod;
+	cout<<ans<<endl;
+
+	return 0;
 }

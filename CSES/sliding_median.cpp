@@ -72,5 +72,69 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	int n, k;
+	cin>>n>>k;
+
+	vector<int> arr(n);
+	for(int i=0; i<n; i++) cin>>arr[i];
+
+	int maxs=0, mins=0;
+	multiset<int> maxset, minset;
+	if(k&1)
+		maxs = k/2+1, mins=k/2;
+	else
+		maxs = mins = k/2;
+
+	for(int i=0; i<maxs; i++)
+		maxset.insert(arr[i]);
+	for(int i=maxs; i<k; i++){
+		if(arr[i] <= *maxset.begin()){
+			minset.insert(arr[i]);
+		}
+		else{
+			maxset.insert(arr[i]);
+			minset.insert(*maxset.begin());
+			maxset.erase(maxset.begin());
+		}
+	}
+
+
+	for(int i=0; i+k-1<n; i++){
+		if(i!=0){
+			auto itr = maxset.find(arr[i-1]);
+			if(itr == maxset.end()){
+				minset.erase(minset.find(arr[i-1]));
+			}
+			else{
+				maxset.erase(itr);
+				/*After erasing the element from maxset, size of maxset is
+				smaller than req size, so when inserting it will automatically insert in the
+				maxset in ahead code. To prevent that, we ensure maxset always maintain its
+				size by inserting biggest element of minset into maxset.*/
+				if(!minset.empty()){
+					int prev = *minset.rbegin();
+					maxset.insert(prev);
+					minset.erase(minset.find(prev));
+				}
+			}
+
+			if((int)maxset.size() < maxs){
+				maxset.insert(arr[i+k-1]);
+			}
+			else if(arr[i+k-1] <= *maxset.begin()){
+				minset.insert(arr[i+k-1]);
+			}
+			else{
+				maxset.insert(arr[i+k-1]);
+				minset.insert(*maxset.begin());
+				maxset.erase(maxset.begin());
+			}
+
+		}
+
+		// if odd, we need middle element else smaller of the middle.
+		int median = (k&1 ? *maxset.begin() : *minset.rbegin());
+		cout << median << " ";
+	}
+
 }

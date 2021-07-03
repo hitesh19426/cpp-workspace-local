@@ -72,5 +72,42 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	int n, a, b;
+	cin>>n>>a>>b;
+
+	int arr[n];
+	for(int i=0; i<n; i++)
+		cin>>arr[i];
+
+	long long dp[n];
+	pair<int, int> len[n];
+
+	dp[0] = arr[0], len[0].first = 1, len[0].second=-1;
+	for(int i=1; i<n; i++){
+		if(arr[i] > arr[i]+dp[i-1]){
+			dp[i] = arr[i];
+			len[i].first=1;
+			len[i].second=1;
+		}
+		else if(arr[i] == arr[i]+dp[i-1]){
+			dp[i] = arr[i];
+			len[i].first=len[i-1].first+1;
+			len[i].second=1;
+		}
+		else{
+			dp[i]=arr[i];
+			len[i].first = len[i-1].first+1;
+			len[i].second=-1;
+		}
+	}
+
+	long long ans=arr[0];
+	for(int i=0; i<n; i++){
+		if(a<=len[i].first && len[i].first<=b)
+			ans = max(ans, dp[i]);
+		if (len[i].second!=-1 && a<=len[i].second && len[i].second<=b)
+			ans = max(ans, dp[i]);
+	}
+
+	cout<<ans;
 }

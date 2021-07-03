@@ -3,9 +3,10 @@ using namespace std;
 void solve();
 
 #define endl '\n'
+#define mod 1000000007
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 
-/*----------------------------------------------------------------------------------------------------*/
+//----------------------------------------------------------------------------------------------------//
 
 int main(int argc, char const *argv[])
 {
@@ -16,7 +17,7 @@ int main(int argc, char const *argv[])
 #endif
 
 	int t=1;
-	// cin>>t;
+	cin>>t;
 	while(t--){
 		solve();
 		cout<<endl;
@@ -28,16 +29,13 @@ void solve(){
 	int n;
 	cin>>n;
 
-	int len = (1<<n);
-	for(int i=0; i<len; i++){
-		int gi = i ^ (i>>1);
-
-		for(int j=n-1; j>=0; j--){
-			if(gi & (1<<j))
-				cout<<1;
-			else cout<<0;
-		}
-		cout<<endl;
+	int nimsum = 0;
+	for(int i=0; i<n; i++){
+		int x;
+		cin>>x;
+		nimsum ^= x;
 	}
-}
 
+	cout << (nimsum ? "first" : "second");
+
+}

@@ -3,7 +3,6 @@ using namespace std;
 void solve();
 
 #define endl '\n'
-#define mod 1000000007
 #define fastio() ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 
 #define ll long long
@@ -11,6 +10,7 @@ void solve();
 #define ull unsigned long long
 #define nline '\n'
 #define INF INT_MAX
+#define mod 1000000007
 #define mod1 998244353
 #define INFLL LLONG_MAX
 #define PI 3.141592653589793238462
@@ -72,5 +72,20 @@ int main(int argc, char const *argv[])
 }
 
 void solve(){
-	
+	long long n;
+	cin>>n;
+
+	long long ans = 0;
+	for(long long i=1; i*i<=n; i++){
+		if(n%i==0){
+			if(n/i==i){
+				ans = (ans+i)%mod;
+			}
+			else{
+				ans = (ans + (n/i) + i)%mod;
+			}
+		}
+	}
+
+	cout<<ans;
 }

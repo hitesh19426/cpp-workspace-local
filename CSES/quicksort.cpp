@@ -71,6 +71,37 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
+int partition(vector<int> &arr, int l, int r){
+	int left=l, pivot = arr[r];
+	for(int right=l; right<r; right++){
+		if(arr[right] < pivot){
+			swap(arr[left], arr[right]);
+			left++;
+		}
+	}
+	swap(arr[left], arr[r]);
+	return left;
+}
+
+void quicksort(vector<int> &arr, int l, int r){
+	if(r<=l)
+		return ;
+
+	int pivot = partition(arr, l, r);
+	quicksort(arr, l, pivot-1);
+	quicksort(arr, pivot+1, r);
+}
+
 void solve(){
-	
+	int n;
+	cin>>n;
+
+	vector<int> arr(n);
+	for(int i=0; i<n; i++){
+		cin>>arr[i];
+	}
+
+	quicksort(arr, 0, n-1);
+
+	print(arr);
 }
