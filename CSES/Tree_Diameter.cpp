@@ -144,7 +144,7 @@ public:
 
 		return max_dist;
 	}
-	
+
 };
 
 void solve(){
@@ -161,4 +161,3 @@ void solve(){
 
 	cout<<graph.diameter();
 }
-
