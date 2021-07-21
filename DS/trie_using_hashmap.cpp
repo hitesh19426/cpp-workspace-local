@@ -4,15 +4,17 @@ void solve();
 
 #define endl '\n'
 #define mod 1000000007
+#define fastio()                     \
+	ios_base::sync_with_stdio(false); \
+	cin.tie(NULL);                    \
+	cout.tie(NULL)
+
 //----------------------------------------------------------------------------------------------------//
 
 int main(int argc, char const *argv[])
 {
 	/* code */
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
-
+	fastio();
 #ifndef ONLINE_JUDGE
 	freopen("errorf.in", "w", stderr);
 #endif
@@ -29,30 +31,21 @@ int main(int argc, char const *argv[])
 
 struct trieNode
 {
-	trieNode *children[26];
+	unordered_map<char, trieNode *> children;
 	bool endOfWord;
 
-	trieNode()
-	{
-		for (int i = 0; i < 26; i++)
-			children[i] = nullptr;
-		endOfWord = false;
-	}
+	trieNode() : endOfWord(false) {}
 };
 
-void insert(trieNode *root, string key)
+void insert(trieNode *root, string str)
 {
 	trieNode *ptr = root;
-	for (int i = 0; i < (int)key.size(); i++)
+	for (char ch : str)
 	{
-		int ind = key[i] - 'a';
+		if (ptr->children.find(ch) == ptr->children.end())
+			ptr->children[ch] = new trieNode();
 
-		if (ptr->children[ind] == nullptr)
-		{
-			ptr->children[ind] = new trieNode();
-		}
-
-		ptr = ptr->children[ind];
+		ptr = ptr->children[ch];
 	}
 
 	ptr->endOfWord = true;
@@ -61,14 +54,12 @@ void insert(trieNode *root, string key)
 bool search(trieNode *root, string str)
 {
 	trieNode *ptr = root;
-	int i, n = str.size();
-	for (i = 0; i < n; i++)
+	for (char ch : str)
 	{
-		int ind = str[i] - 'a';
-		if (ptr->children[ind] == nullptr)
+		if (ptr->children.find(ch) == ptr->children.end())
 			return false;
 
-		ptr = ptr->children[ind];
+		ptr = ptr->children[ch];
 	}
 
 	return ptr->endOfWord;
